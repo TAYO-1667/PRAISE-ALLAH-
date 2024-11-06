@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Daily Reminders</title>
+    <link rel="stylesheet" href="AAL.CSS">
+</head>
+<body>
+    <button id="translate-button">Translate</button>
+    
+    <section class="daily-reminders">
+        <h2>Say these every day:</h2>
+        <ul>
+            <li>
+                <span class="arabic">الله أكبر</span>
+                <span class="english">Allahu Akbar - God is the Greatest (5x)</span>
+            </li>
+            <li>
+                <span class="arabic">الحمد لله</span>
+                <span class="english">Alhamdulillah - All Praise is due to Allah (5x)</span>
+            </li>
+            <li>
+                <span class="arabic">اللهم بارك</span>
+                <span class="english">Allahumma Barik - O Allah, bless (5x)</span>
+            </li>
+            <li>
+                <span class="arabic">أستغفر الله</span>
+                <span class="english">Astaghfirullah - I seek forgiveness from Allah (5x)</span>
+            </li>
+            <li>
+                <span class="arabic">سبحان الله</span>
+                <span class="english">Subhanallah - Glory be to Allah (5x)</span>
+            </li>
+        </ul>
+    </section>
+
+    <section class="names-of-allah">
+        <h2>99 Names of Allah</h2>
+        <div id="name-display"></div>
+    </section>
+
+    <section class="audio-section">
+        <h2>Listen to Beautiful Surah</h2>
+        <audio id="recitation-audio" loop>
+            <source src="world-s-most-beautiful-recitation-of-surah-ar-rahman-swr-lrhmn-zikrullah-tv-128-ytshorts.savetube.me.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+    </section>
+
+    <script>
+        const names = [
+            "Ar-Rahmaan - The Beneficent",
+            "Ar-Raheem - The Merciful",
+            "Al-Malik - The King",
+            "Al-Quddus - The Most Sacred",
+            "As-Salam - The Source of Peace, The Flawless",
+            // Add all 99 names
+        ];
+
+        let index = 0;
+        const nameDisplay = document.getElementById('name-display');
+        const translateButton = document.getElementById('translate-button');
+        const audioElement = document.getElementById('recitation-audio');
+        let isArabic = true;
+
+        translateButton.addEventListener('click', () => {
+            isArabic = !isArabic;
+            document.querySelectorAll('.arabic').forEach(el => el.style.display = isArabic ? 'block' : 'none');
+            document.querySelectorAll('.english').forEach(el => el.style.display = isArabic ? 'none' : 'block');
+            translateButton.textContent = isArabic ? 'Translate' : 'Show Arabic';
+
+            if (!isArabic) {
+                audioElement.play(); // Play audio when translations are shown
+            } else {
+                audioElement.pause(); // Pause audio when Arabic text is shown
+            }
+        });
+
+        function displayNextName() {
+            nameDisplay.textContent = names[index];
+            nameDisplay.classList.remove('fade');
+            void nameDisplay.offsetWidth; // Trigger reflow to restart animation
+            nameDisplay.classList.add('fade');
+            index = (index + 1) % names.length;
+        }
+
+        setInterval(displayNextName, 3000);
+        displayNextName();
+    </script>
+</body>
+</html>
